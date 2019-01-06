@@ -1,13 +1,13 @@
-#include <stdio.h>
+//#include <stdio.h>
 #include <iostream>
 #include <Windows.h>
 #include <fstream>
-#include <synchapi.h>
-#include <process.h>
-#include <ctype.h>
-#include <thread>
+//#include <synchapi.h>
+//#include <process.h>
+//#include <ctype.h>
+//#include <thread>
 #include <TlHelp32.h>
-#include <cstdio>
+//#include <cstdio>
 using namespace std;
 char dir[256];
 char file[256];
