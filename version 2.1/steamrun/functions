@@ -1,0 +1,179 @@
+﻿//#include <atlbase.h>
+//bool is64bitos();
+//bool islibinc( );
+//LPFN_ISWOW64PROCESS fnIsWow64Process;
+//#include <synchapi.h>
+//#include <process.h>
+//#include <ctype.h>
+//#include <thread>
+//#include <cstdio>
+//#include <atlstr.h>
+//HANDLE GetProcessByName(PCSTR name);
+//void GetProcId(char* ProcName);
+//DWORD ProcId = 0;
+//typedef BOOL(WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+//#define _WIN32_WINNT 0x0A00
+/*BOOL IsWow64()
+{
+	BOOL bIsWow64 = FALSE;
+
+	//IsWow64Process is not available on all supported versions of Windows.
+	//Use GetModuleHandle to get a handle to the DLL that contains the function
+	//and GetProcAddress to get a pointer to the function if available.
+
+	fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(
+		GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
+
+	if (NULL != fnIsWow64Process)
+	{
+		if (!fnIsWow64Process(GetCurrentProcess(), &bIsWow64))
+		{
+			//handle error
+		}
+	}
+	return bIsWow64;
+}*/
+/*bool islibinc()
+{
+	HMODULE kernel = GetModuleHandle(TEXT("kernel32"));
+	if (GetProcAddress(kernel, "IsWow64Process") != NULL)
+	{
+		return true;
+	}
+	else return false;
+
+}
+bool is64bitos()
+{
+	
+	
+	if(islibinc())
+	{
+		PBOOL wow646 = false;
+		IsWow64Process(GetCurrentProcess(), wow646);
+		if (wow646)
+		{
+			return true;
+		}
+		else return false;
+	}
+	else
+	{
+		fstream testfile;
+		testfile.open("C:\\Windows\\SysWOW64\\license.rtf");
+		if (testfile.is_open())
+		{
+			testfile.close();
+			return true;
+		}
+		else
+		{
+			testfile.close();
+			return false;
+		}
+
+	}
+}*/
+	/*if(IsWow64() == (BOOL)true)
+	{
+		REG_SW_GROUP_I_WANT = _T("SOFTWARE\\WOW6432Node\\Valve\\Steam");
+	}
+	else
+	{
+		REG_SW_GROUP_I_WANT = _T("SOFTWARE\\Valve\\Steam");
+	}
+	REG_KEY_I_WANT = _T("SteamPID");
+	if (ERROR_SUCCESS != regKey.Open(HKEY_LOCAL_MACHINE, REG_SW_GROUP_I_WANT))
+	{
+		regKey.Close();
+		return 1;
+	}
+	if (ERROR_SUCCESS != regKey.QueryDWORDValue(REG_KEY_I_WANT, dwValue))
+	{
+		regKey.Close();
+		return 1;
+	}
+	regKey.Close();
+	return 0;
+	*/
+	
+/*HANDLE GetProcessByName(PCSTR name)
+{
+	DWORD pid = 0;
+	// Create toolhelp snapshot.
+	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	PROCESSENTRY32 process;
+	ZeroMemory(&process, sizeof(process));
+	process.dwSize = sizeof(process);
+	// Walkthrough all processes.
+	if (Process32First(snapshot, &process))
+	{
+		do
+		{
+			// Compare process.szExeFile based on format of name, i.e., trim file path
+			// trim .exe if necessary, etc.
+			if (string(process.szExeFile) == string(name))
+			{
+				pid = process.th32ProcessID;
+				break;
+			}
+		} while (Process32Next(snapshot, &process));
+	}
+	CloseHandle(snapshot);
+
+	if (pid != 0)
+	{
+		ProcId = pid;
+		return OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
+	} 
+	return NULL;
+}*/
+/*DWORD FindProcessId(const std::wstring& processName)
+{
+	PROCESSENTRY32 processInfo;
+	processInfo.dwSize = sizeof(processInfo);
+
+	HANDLE processesSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+	if (processesSnapshot == INVALID_HANDLE_VALUE)
+		return 0;
+
+	Process32First(processesSnapshot, &processInfo);
+	if (!processName.compare(processInfo.szExeFile))
+	{
+		CloseHandle(processesSnapshot);
+		return processInfo.th32ProcessID;
+	}
+
+	while (Process32Next(processesSnapshot, &processInfo))
+	{
+		if (!processName.compare(processInfo.szExeFile))
+		{
+			CloseHandle(processesSnapshot);
+			return processInfo.th32ProcessID;
+		}
+	}
+
+	CloseHandle(processSnapshot);
+	return 0;
+}*/
+/*void GetProcId(char* ProcName)
+{
+	PROCESSENTRY32   pe32;
+	HANDLE         hSnapshot = NULL;
+
+	pe32.dwSize = sizeof(PROCESSENTRY32);
+	hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+
+	if (Process32First(hSnapshot, &pe32))
+	{
+		do {
+			if (strcmp(pe32.szExeFile, ProcName) == 0)
+				break;
+		} while (Process32Next(hSnapshot, &pe32));
+	}
+
+	if (hSnapshot != INVALID_HANDLE_VALUE)
+		CloseHandle(hSnapshot);
+
+	ProcId = pe32.th32ProcessID;
+}*/
