@@ -286,7 +286,7 @@ int main()
 				h = CreateFile((LPCSTR)pid2, GENERIC_READ | GENERIC_WRITE, 0, NULL, 5, FILE_ATTRIBUTE_NORMAL, NULL);
 				WriteFile(h, buff, sizeof(GetCurrentProcessId()), NULL, NULL);
 				CloseHandle(h);
-				if(GetRegKey() == 0 || !showProcessInformation(GetRegKey(),"steam.exe"))
+				if(GetRegKey() == 0 || (!showProcessInformation(GetRegKey(),"Steam.exe") || !showProcessInformation(GetRegKey(), "steam.exe")))
 				{
 					HKEY hKey = { 0 };
 					LONG result = 0;
@@ -301,12 +301,12 @@ int main()
 						{
 							result = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\Valve\\Steam", 0, KEY_READ, &hKey);
 						}
-					}
-					if (result == ERROR_SUCCESS)
-					{
-						RegSetValueEx(hKey,"SteamPID",NULL,type,0,size);
-					}
-					else goto exit;
+						if (result == ERROR_SUCCESS)
+						{
+							RegSetValueEx(hKey, "SteamPID", NULL, type, 0, size);
+						}
+						else goto exit;
+					} 
 					CreateProcessA(process, NULL, 0, 0, 0, 0, 0, 0, &si, &pi);
 					pid15 = pi.dwProcessId;
 					thread1 = (HANDLE)CreateThread(0, 0, (LPTHREAD_START_ROUTINE)filedel, 0, 0, 0);
