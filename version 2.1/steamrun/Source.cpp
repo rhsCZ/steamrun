@@ -286,11 +286,11 @@ int main()
 				h = CreateFile((LPCSTR)pid2, GENERIC_READ | GENERIC_WRITE, 0, NULL, 5, FILE_ATTRIBUTE_NORMAL, NULL);
 				WriteFile(h, buff, sizeof(GetCurrentProcessId()), NULL, NULL);
 				CloseHandle(h);
-				if(GetRegKey() == 0 || (!showProcessInformation(GetRegKey(),"Steam.exe") || !showProcessInformation(GetRegKey(), "steam.exe")))
+				if(GetRegKey() == 0 || (!showProcessInformation(GetRegKey(),"Steam.exe") && !showProcessInformation(GetRegKey(), "steam.exe")))
 				{
 					HKEY hKey = { 0 };
 					LONG result = 0;
-					unsigned long type = REG_DWORD, size = 0;
+					unsigned long type = REG_DWORD, size = 10;
 					if (GetRegKey() >= 1)
 					{
 						if (IsWow64())
