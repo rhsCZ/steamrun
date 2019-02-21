@@ -218,7 +218,6 @@ bool showProcessInformation(unsigned int pid, const char *filename)
 	}
 	else 
 	{
-		CloseHandle(hSnapshot);
 		return false;
 	}
 }
@@ -280,7 +279,7 @@ int main()
 				sscanf(pid3, "%d", &pid15);
 			}
 			
-			if(pid15 == 0)
+			if(pid15 == 0 || !showProcessInformation(GetRegKey(), "steamrun.exe"))
 			{
 				char buff[20] = {0,0,0,0,0,0,0,0,0,0,0,0};
 				sprintf(buff, "%u", GetCurrentProcessId());
@@ -290,7 +289,7 @@ int main()
 				if(GetRegKey() == 0 || !showProcessInformation(GetRegKey(),"steam.exe"))
 				{
 					HKEY hKey = { 0 };
-					LONG result;
+					LONG result = 0;
 					unsigned long type = REG_DWORD, size = 0;
 					if (GetRegKey() >= 1)
 					{
